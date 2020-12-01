@@ -13,15 +13,11 @@ import java.util.Date;
 public class CfDatasource {
     private Integer id;
 
-    private Integer group_id;
-
     private String name;
 
     private String description;
-
+    //  1. Mysql 2. Sqlserver 3. mongodb 4. Redis  5. mq
     private Integer type;
-
-    private Integer status;
 
     private String ip;
 
@@ -40,6 +36,6 @@ public class CfDatasource {
     private Date create_time;
 
     private Date update_time;
-
+    //  开启关闭
     private Integer query_switch;
 }

@@ -1,9 +1,8 @@
 package com.dms;
 
-import com.dms.entity.CfDatasource;
-import com.dms.entity.TableFieldEntity;
-import com.dms.entity.TableIndexEntity;
-import com.dms.entity.TableInfoEntity;
+import com.dms.entity.*;
+import com.dms.enums.SqlExeRecordStatusEnum;
+import com.dms.service.ISqlExeService;
 import com.dms.utils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -11,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DmsTest {
+
+    @Resource
+    ISqlExeService iSqlExeService;
+
     @Test
     public void test() {
         System.out.println("test");
@@ -43,5 +48,20 @@ public class DmsTest {
             System.out.println();
         } catch (Exception e) {
         }
+    }
+    @Test
+    public void test2() {
+        RsSqlExeRecord rsSqlExeRecord = RsSqlExeRecord.builder()
+                .id(2)
+                .sql_text("ALTER TABLE cf_bus_group_owners ADD COLUMN `test` VARCHAR(256) NOT NULL COMMENT 'test' AFTER `bus_group_id`;")
+                .create_account("admin")
+                .create_name("管理员")
+                .update_time(new Date())
+                .create_time(new Date())
+                .datasource_id(1)
+                .status(SqlExeRecordStatusEnum.RUNNING.getStatus())
+                .db("kb-dms")
+                .build();
+        iSqlExeService.sqlExe(rsSqlExeRecord,"ALTER TABLE cf_bus_group_owners ADD COLUMN `test` VARCHAR(256) NOT NULL COMMENT 'test' AFTER `bus_group_id`;");
     }
 }
